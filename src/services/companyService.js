@@ -1,7 +1,7 @@
 import axios from '../axios'
 
-const companyList = () => {
+const getCompanyList = () => {
     return axios.post('api/v1/login');
 }
 
-export { companyList };
+export { getCompanyList};

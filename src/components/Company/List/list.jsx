@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import { companyList } from '../../../services/companyService';
+import { getCompanyList} from '../../../services/companyService';
+
 ComponentsList.propTypes = {};
 
 function ComponentsList(props) {
@@ -25,12 +26,20 @@ function ComponentsList(props) {
             admin_account: 'admin',
         }
     ]
-    useEffect(() => {
-        // async () => {
-        //     const { data } = await companyList();
-        // }
+    useEffect(async () => {
+        try {
+            let data = await getCompanyList();
+            setCompanyList(data)
 
-        setCompanyList(list)
+        } catch (e) {
+            if (e.response) {
+                if (e.response.data) {
+                    let errMessage = e.response.data.message
+                    console.log(errMessage)
+                }
+            }
+            console.log('error message', e.response);
+        }
     }, [])
 
     return (
