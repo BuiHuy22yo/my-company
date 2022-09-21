@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { getCompanyListApi } from '../../../services/companyService';
+import { getCompanyListAPi } from '../../../services/companyService';
 
 ComponentsList.propTypes = {};
 
@@ -25,14 +25,11 @@ function ComponentsList(props) {
             domain: 'https://codluck.com',
             admin_account: 'admin',
         }
-    ];
-    useEffect( () => {
-        getCompanyList()
-    }, [])
+    ]
 
-    const getCompanyList = async() =>{
+    const getCompanyList = async () => {
         try {
-            let { data } = await getCompanyListApi();
+            let { data } = await getCompanyListAPi();
             console.log(data);
             setCompanyList(data)
 
@@ -45,7 +42,10 @@ function ComponentsList(props) {
             }
             console.log('error message', e.response);
         }
-     }
+    }
+    useEffect( () => {
+        getCompanyList();
+    }, [])
 
     return (
         <div>
@@ -59,7 +59,7 @@ function ComponentsList(props) {
                 </tr>
                 </thead>
                 <tbody>
-                {/* {
+                {
                     companyList && companyList.map((item, index) => {
                         return (
                             <>
@@ -71,7 +71,7 @@ function ComponentsList(props) {
                             </>
                         )
                     })
-                } */}
+                }
                 </tbody>
             </table>
         </div>
