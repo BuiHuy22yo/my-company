@@ -1,34 +1,9 @@
-import React, {useEffect, useState} from 'react';
-import {getCompanyDetailAPi} from "../../../services/companyService";
-import {useSearchParams} from "react-router-dom";
+import React, {useState} from 'react';
 
-ComponentsDetail.propTypes = {};
+ComponentsCreate.propTypes = {};
 
-function ComponentsDetail(props) {
+function ComponentsCreate(props) {
     const [company, setCompany] = useState({});
-    const [searchParams] = useSearchParams();
-
-    const id = searchParams.get('id');
-    useEffect(() => {
-        getCompanyDetail();
-    }, [])
-
-    const getCompanyDetail = async () => {
-        try {
-            let {data} = await getCompanyDetailAPi(id);
-            console.log(data);
-            setCompany(data)
-
-        } catch (e) {
-            if (e.response) {
-                if (e.response.data) {
-                    let errMessage = e.response.data.message
-                    console.log(errMessage)
-                }
-            }
-            console.log('error message', e.response);
-        }
-    }
 
     const onInputChange = (event, field) => {
         let value = event.target.value
@@ -49,7 +24,7 @@ function ComponentsDetail(props) {
         setCompany(companyInfo)
     }
 
-    const handleUpdateCompany = () => {
+    const handleCreateCompany = () => {
         const form_data = new FormData();
 
         form_data.append('name',company.name );
@@ -57,12 +32,11 @@ function ComponentsDetail(props) {
         form_data.append('admin_account', company.admin_account );
     }
 
-
     return (
         <div>
 
             <div className="form_create">
-                <h2 className="title">Update Company</h2>
+                <h2 className="title">Create Company</h2>
                 <div className="form-group icon-true pb-2">
                     <label htmlFor="name">Name</label>
                     <input
@@ -97,12 +71,12 @@ function ComponentsDetail(props) {
                     />
                 </div>
 
-                <div className="form-group create-action button-action mt-3 m-auto" onClick={handleUpdateCompany}>
-                    Update
+                <div className="form-group create-action button-action mt-3 m-auto" onClick={handleCreateCompany}>
+                    Create
                 </div>
             </div>
         </div>
     );
 }
 
-export default ComponentsDetail;
+export default ComponentsCreate;

@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import { getCompanyListAPi } from '../../../services/companyService';
+import {useNavigate} from "react-router-dom";
+import {getCompanyListAPi} from '../../../services/companyService';
 
 ComponentsList.propTypes = {};
 
 function ComponentsList(props) {
+    const navigate = useNavigate();
 
     const [companyList, setCompanyList] = useState([]);
     const list = [
@@ -26,10 +28,16 @@ function ComponentsList(props) {
             admin_account: 'admin',
         }
     ]
+    // useEffect(() => {
+    //     setCompanyList(list)
+    // })
+    useEffect(() => {
+        getCompanyList();
+    }, [])
 
     const getCompanyList = async () => {
         try {
-            let { data } = await getCompanyListAPi();
+            let {data} = await getCompanyListAPi();
             console.log(data);
             setCompanyList(data)
 
@@ -43,19 +51,31 @@ function ComponentsList(props) {
             console.log('error message', e.response);
         }
     }
-    useEffect( () => {
-        getCompanyList();
-    }, [])
+
+    const handleCreate = () => {
+        navigate('/company/create', {replace: true});
+    }
+    const handleEdit = (event, id) => {
+        navigate(`/company/edit/${id}`, {replace: true});
+    }
+    const handleDelete = (id) => {
+        console.log('delete')
+        // companyDelete(id)
+    }
 
     return (
         <div>
-            <h3 className='text-center'>Company List</h3>
+            <div className='d-flex justify-content-between align-content-center mb-3'>
+                <h3 className='mb-0'>Company List</h3>
+                <div className="create button-action" onClick={() => handleCreate()}>Create</div>
+            </div>
             <table className='w-100'>
                 <thead>
-                <tr className='border-top border-bottom border-primary '>
-                    <td className='w-25 px-1'>name</td>
-                    <td className='w-50 px-1'>domain</td>
-                    <td className='w-25 px-1'>admin_account</td>
+                <tr className='border-top border-bottom border-primary text-center'>
+                    <td className='w-25 px-1 py-2 '>name</td>
+                    <td className='w-50 px-1 py-2 '>domain</td>
+                    <td className='w-25 px-1 py-2 '>admin_account</td>
+                    <td className='w-25 px-1 py-2 '>action</td>
                 </tr>
                 </thead>
                 <tbody>
@@ -63,10 +83,18 @@ function ComponentsList(props) {
                     companyList && companyList.map((item, index) => {
                         return (
                             <>
-                                <tr key={item.id} className='border-bottom border-primary'>
-                                    <td className='px-1'>{item.name}</td>
-                                    <td className='px-1'><a href={item.domain}>{item.domain}</a></td>
-                                    <td className='px-1'>{item.admin_account}</td>
+                                <tr key={item.id} className='border-bottom border-primary text-center'>
+                                    <td className='px-1 py-2'>{item.name}</td>
+                                    <td className='px-1 py-2'><a href={item.domain}>{item.domain}</a></td>
+                                    <td className='px-1 py-2'>{item.admin_account}</td>
+                                    <td className='px-1 py-2 d-flex'>
+                                        <div className="create button-action mx-2"
+                                             onClick={(event) => handleEdit(event, item.id)}>Edit
+                                        </div>
+                                        <div className="create button-action mx-2"
+                                             onClick={(event) => handleDelete(event, item.id)}>Delete
+                                        </div>
+                                    </td>
                                 </tr>
                             </>
                         )
