@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {getCompanyDetailAPi} from "../../../services/companyService";
+import {getCompanyDetailAPi, handleCompanyUpdate} from "../../../services/companyService";
 import {useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 ComponentsDetail.propTypes = {};
 
 function ComponentsDetail(props) {
     const [company, setCompany] = useState({});
+    const navigate = useNavigate();
 
     const params = useParams();
     useEffect(() => {
@@ -31,31 +33,33 @@ function ComponentsDetail(props) {
 
     const onInputChange = (event, field) => {
         let value = event.target.value
-        let companyInfo = {
-            name: '',
-            domain: '',
-            admin_account: ''
-        }
         if(field === 'name'){
-            companyInfo.name = value
+            // companyInfo.name = value
+            setCompany(company.name =value )
         }
         if(field === 'domain'){
-            companyInfo.domain = value
+            // companyInfo.domain = value
+            setCompany(company.domain =value )
         }
         if(field === 'admin_account'){
-            companyInfo.admin_account = value
+            // companyInfo.admin_account = value
+            setCompany(company.admin_account =value )
         }
-        setCompany(companyInfo)
+        // setCompany(companyInfo)
     }
 
-    const handleUpdateCompany = () => {
+    const handleUpdateCompany = (id) => {
         const form_data = new FormData();
 
         form_data.append('name',company.name );
         form_data.append('domain', company.domain );
         form_data.append('admin_account', company.admin_account );
+        handleCompanyUpdate(id);
     }
 
+    const handleListCompany = () => {
+        navigate('/company/list', {replace: true});
+    }
 
     return (
         <div>
@@ -95,9 +99,11 @@ function ComponentsDetail(props) {
                         onChange={(event) => onInputChange(event, 'admin_account')}
                     />
                 </div>
-
                 <div className="form-group create-action button-action mt-3 m-auto" onClick={handleUpdateCompany}>
                     Update
+                </div>
+                <div className="form-group create-action button-action mt-3 m-auto" onClick={handleListCompany}>
+                    Cancel
                 </div>
             </div>
         </div>

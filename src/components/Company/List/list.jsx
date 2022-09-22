@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
-import {getCompanyListAPi} from '../../../services/companyService';
+import {getCompanyListAPi, handleCompanyDeleteApi} from '../../../services/companyService';
 
 ComponentsList.propTypes = {};
 
@@ -58,9 +58,11 @@ function ComponentsList(props) {
     const handleEdit = (event, id) => {
         navigate(`/company/edit/${id}`, {replace: true});
     }
-    const handleDelete = (id) => {
-        console.log('delete')
-        // companyDelete(id)
+    const handleDelete = (event, id) => {
+        console.log('delete',id)
+
+        handleCompanyDeleteApi(id);
+        getCompanyList();
     }
 
     return (

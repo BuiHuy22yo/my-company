@@ -1,27 +1,26 @@
 import React, {useState} from 'react';
+import {handleCompanyCreate} from "../../../services/companyService";
+import {useNavigate} from "react-router-dom";
 
 ComponentsCreate.propTypes = {};
 
 function ComponentsCreate(props) {
     const [company, setCompany] = useState({});
-
+    const navigate = useNavigate();
     const onInputChange = (event, field) => {
         let value = event.target.value
-        let companyInfo = {
-            name: '',
-            domain: '',
-            admin_account: ''
-        }
         if(field === 'name'){
-            companyInfo.name = value
+            // companyInfo.name = value
+            setCompany(company.name =value )
         }
         if(field === 'domain'){
-            companyInfo.domain = value
+            // companyInfo.domain = value
+            setCompany(company.domain =value )
         }
         if(field === 'admin_account'){
-            companyInfo.admin_account = value
+            // companyInfo.admin_account = value
+            setCompany(company.admin_account =value )
         }
-        setCompany(companyInfo)
     }
 
     const handleCreateCompany = () => {
@@ -30,6 +29,11 @@ function ComponentsCreate(props) {
         form_data.append('name',company.name );
         form_data.append('domain', company.domain );
         form_data.append('admin_account', company.admin_account );
+        console.log('company',company);
+        handleCompanyCreate(form_data);
+    }
+    const handleListCompany = () => {
+        navigate('/company/list', {replace: true});
     }
 
     return (
@@ -70,9 +74,11 @@ function ComponentsCreate(props) {
                         onChange={(event) => onInputChange(event, 'admin_account')}
                     />
                 </div>
-
                 <div className="form-group create-action button-action mt-3 m-auto" onClick={handleCreateCompany}>
                     Create
+                </div>
+                <div className="form-group create-action button-action mt-3 m-auto" onClick={handleListCompany}>
+                    Cancel
                 </div>
             </div>
         </div>
