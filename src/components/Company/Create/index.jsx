@@ -5,21 +5,18 @@ import {useNavigate} from "react-router-dom";
 ComponentsCreate.propTypes = {};
 
 function ComponentsCreate(props) {
-    const [company, setCompany] = useState({});
+    const [company, setCompany] = useState({name: '',domain: '', admin_account: ''});
     const navigate = useNavigate();
     const onInputChange = (event, field) => {
         let value = event.target.value
         if(field === 'name'){
-            // companyInfo.name = value
-            setCompany(company.name =value )
+            setCompany({...company, name : value} )
         }
         if(field === 'domain'){
-            // companyInfo.domain = value
-            setCompany(company.domain =value )
+            setCompany({...company, domain : value} )
         }
         if(field === 'admin_account'){
-            // companyInfo.admin_account = value
-            setCompany(company.admin_account =value )
+            setCompany({...company,admin_account : value} )
         }
     }
 
@@ -74,12 +71,15 @@ function ComponentsCreate(props) {
                         onChange={(event) => onInputChange(event, 'admin_account')}
                     />
                 </div>
-                <div className="form-group create-action button-action mt-3 m-auto" onClick={handleCreateCompany}>
-                    Create
+                <div className='d-flex justify-content-center'>
+                    <div className="form-group create-action button-action mt-3 mx-2" onClick={handleCreateCompany}>
+                        Create
+                    </div>
+                    <div className="form-group create-action button-action mt-3 mx-2" onClick={handleListCompany}>
+                        Cancel
+                    </div>
                 </div>
-                <div className="form-group create-action button-action mt-3 m-auto" onClick={handleListCompany}>
-                    Cancel
-                </div>
+
             </div>
         </div>
     );

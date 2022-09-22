@@ -34,18 +34,14 @@ function ComponentsDetail(props) {
     const onInputChange = (event, field) => {
         let value = event.target.value
         if(field === 'name'){
-            // companyInfo.name = value
-            setCompany(company.name =value )
+            setCompany({...company, name : value} )
         }
         if(field === 'domain'){
-            // companyInfo.domain = value
-            setCompany(company.domain =value )
+            setCompany({...company, domain : value} )
         }
         if(field === 'admin_account'){
-            // companyInfo.admin_account = value
-            setCompany(company.admin_account =value )
+            setCompany({...company, admin_account : value} )
         }
-        // setCompany(companyInfo)
     }
 
     const handleUpdateCompany = (id) => {
@@ -99,12 +95,15 @@ function ComponentsDetail(props) {
                         onChange={(event) => onInputChange(event, 'admin_account')}
                     />
                 </div>
-                <div className="form-group create-action button-action mt-3 m-auto" onClick={handleUpdateCompany}>
-                    Update
+                <div className='d-flex justify-content-center'>
+                    <div className="form-group create-action button-action mt-3 mx-2" onClick={handleUpdateCompany}>
+                        Update
+                    </div>
+                    <div className="form-group create-action button-action mt-3 mx-2" onClick={handleListCompany}>
+                        Cancel
+                    </div>
                 </div>
-                <div className="form-group create-action button-action mt-3 m-auto" onClick={handleListCompany}>
-                    Cancel
-                </div>
+
             </div>
         </div>
     );
