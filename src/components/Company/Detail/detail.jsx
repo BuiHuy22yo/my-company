@@ -1,21 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import {getCompanyDetailAPi} from "../../../services/companyService";
-import {useSearchParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 
 ComponentsDetail.propTypes = {};
 
 function ComponentsDetail(props) {
     const [company, setCompany] = useState({});
-    const [searchParams] = useSearchParams();
 
-    const id = searchParams.get('id');
+    const params = useParams();
     useEffect(() => {
         getCompanyDetail();
     }, [])
 
     const getCompanyDetail = async () => {
         try {
-            let {data} = await getCompanyDetailAPi(id);
+            let {data} = await getCompanyDetailAPi(params.id);
             console.log(data);
             setCompany(data)
 
